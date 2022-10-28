@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" type="text/css" href="lruu.css">
+    <style>
+     
+    </style>
+</head>
+<body>
+    <div id="particles-js">
+        <container style="margin-bottom: 2cm;"><h1>Least Recently Used</h1></container>
+    <container class="main">
+		
+        <container class="frame">
+            <label style="margin-top: 0%;" for="numofframe" >Enter Number Of Frame :</label>
+        <input type="number" id="frame" placeholder="0">
+		
+		</container>
+        <br>
+		<br>
+        <container class="value">
+             <label for="string">STRING :</label>   
+            <input type="text" id="arr" placeholder="1 2 3 4 5">
+			
+		</container>
+		<p>*Enter inputed string seperated by space </p>
+
+
+		<container class="sect1">
+			<container >Faults : </container>
+			<container id="ans"></container>
+		</container>
+
+
+
+  <BUTTON onclick="calculate1()">CALCULATE</BUTTON>
+    <br><br>
+    <h2 id="hits"></h2>
+    <h2 id="miss"></h2>
+    <h2 id="ratioh"></h2>
+    <h2 id="ratiom"></h2>
+
+    <table id="grid" width="20%" border="3" cellpadding="40" cellspacing="20pxpx">
+
+    </table>
+
+<!-- <container class="mainn"></container> -->
+    </div>
+<script>
+
+function calculate1(){
+	var frame = document.getElementById("frame").value;
+  var arrayValue = document.getElementById("arr").value.split(" ");
+  lru(Number(frame), arrayValue);
+}
+
+function lru(n, pages) {
+  let s = new Set();
+  let indexes = new Map();
+  let miss = 0;
+  let hit = 0;
+  for (let i = 0; i < pages.length; i++) {
+    if (s.size < n) {
+      if (!s.has(pages[i])) {
+          s.add(pages[i]);
+            var k = 0;
+            var table = document.getElementById("grid");
+            var row = table.insertRow(); 
+          for (let itr of s.values()) {
+            var cell = row.insertCell(k);
+            cell.innerHTML = itr;
+            k++;
+            console.log(itr);
+  
+          }   
+          miss++;
+      }
+      else {
+        hit++;
+      }
+      indexes.set(pages[i], i);
+    } else {
+      if (!s.has(pages[i])) {
+        let lru = Number.MAX_VALUE,
+          val = Number.MIN_VALUE;
+        for (let itr of s.values()) {
+          let temp = itr;
+          if (indexes.get(temp) < lru) {
+            lru = indexes.get(temp);
+            val = temp;
+          }
+        }
+        // Remove the indexes page
+        s.delete(val);
+        //remove lru from hashmap
+        indexes.delete(val);
+        // insert the current page
+        s.add(pages[i]);
+
+        var k = 0;
+        var table = document.getElementById("grid");
+       var row = table.insertRow(); 
+        for(let itr of s.values()) {
+          
+          var cell = row.insertCell(k);
+          cell.innerHTML = itr;
+          k++;
+  
+        }
+        miss++;
+      } else {
+        hit++;
+      }
+      // Update the current page index
+      indexes.set(pages[i], i);
+    }
+  }
+  console.log("Hit: " + hit);
+  console.log("Miss: " + miss);
+  let hitRatio = hit / (hit + miss);
+  let missRatio = miss / (hit + miss);
+  console.log("Hit Ratio: " + hitRatio);
+  console.log("Miss Ratio: " + missRatio);
+  document.getElementById("hits").innerHTML = "Hits " + hit;
+  document.getElementById("miss").innerHTML = "Misses " + miss;
+  document.getElementById("ratioh").innerHTML = "Hit Ratio" + hitRatio;
+  document.getElementById("ratiom").innerHTML = "Miss Ratio" + missRatio;
+}
+
+
+</script>
+
+
+
+
+</body>
+</html>

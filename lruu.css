@@ -1,0 +1,49 @@
+body{
+    margin: 0;
+    padding: 0;
+     background : url('bggg.jpg') no-repeat center/cover; 
+    background-color: rgb(158, 140, 191);
+    height: 100vh; 
+    
+
+    color: rgb(174, 11, 76);
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+   
+} 
+h1{
+    text-align: center;
+    font-size: 3rem;
+    margin-top: 10px ;
+    
+    color: rgb(245, 240, 240);
+}
+.frame{
+    margin-top: 0%;
+    margin-left: 2cm;
+    font-size: 25px;
+}
+
+.value{
+    
+    margin-left: 2cm;
+    font-size: 25px;
+}
+button{
+    margin-left: 350px;
+    margin-top: 10px;
+}
+
+
+
+
+.sect1{
+    display: flex;
+    font-weight: bold;
+}
+#ans{
+    font-size:large ;
+}
+
+.xyz{
+    display: flex;
+}

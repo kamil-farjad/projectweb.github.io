@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" type="text/css" href="lruu.css">
+    <style>
+          #particles-js{
+            width:100%;
+            height: 100vh;
+            background-image: url(zzz.jpg); 
+            
+        } 
+    </style>
+</head>
+<body>
+
+
+        <div id="particles-js">
+            <container style="margin-bottom: 2cm;"><h1>OPT</h1></container>
+        <container class="main">
+            
+            <container class="frame">
+                <label style="margin-top: 0%;" for="numofframe">Enter Number Of Frame :</label>
+            <input type="number" id="frame" placeholder="0">
+            
+            </container>
+            <br>
+            <br>
+            <container class="value">
+                 <label for="string">STRING :</label>   
+                <input type="text" id="arr" placeholder="1 2 3 4 5">
+                
+            </container>
+            <p>*Enter inputed string seperated by space </p>
+    
+    
+            <container class="sect1">
+                <container >Faults : </container>
+                <container id="ans"></container>
+            </container>
+    
+    
+    
+      <BUTTON onclick="calculate1()">CALCULATE</BUTTON>
+        <br><br>
+    
+        <table id="grid" width="20%" border="3" cellpadding="40" cellspacing="20pxpx">
+
+            <h2 id="hits"></h2>
+            <h2 id="miss"></h2>
+            <h2 id="ratioh"></h2>
+            <h2 id="ratiom"></h2>
+        
+    
+    
+        </div>
+    
+
+  
+<script>
+function calculate1(){
+	var frame = document.getElementById("frame").value;
+  var arrayValue = document.getElementById("arr").value.split(" ");
+  optimal(Number(frame), arrayValue);
+}
+
+
+function gridview(frame,arr){
+  var table = document.getElementById("grid");
+  var row = table.insertRow();
+  
+  for (var i = 0; i < frame; i++) {
+    console.log("out"+arr);
+   
+    console.log("in"+frame);
+
+      let j=i;
+      var cell = row.insertCell(i);
+      cell.innerHTML = arr[i];
+  
+ 
+  
+     
+  }
+}
+
+function optimal(n, element) {
+  let res = new Array(n).fill('*');
+  let pos = 0;
+  let hit = 0;
+  let miss = 0;
+  for (let i = 0; i < element.length; i++) {
+    if (!res.includes(element[i])) {
+      if (res.includes(-1)) {
+        res[pos] = element[i];
+        pos = (pos + 1) % n;
+        miss++;
+      } else {
+        let max = -1;
+        let maxIndex = 0;
+        for (let j = 0; j < n; j++) {
+          let temp = element.slice(i + 1).indexOf(res[j]);
+          if (temp === -1) {
+            maxIndex = j;
+            break;
+          } else if (temp > max) {
+            max = temp;
+            maxIndex = j;
+          }
+        }
+        res[maxIndex] = element[i];
+        miss++;
+      }
+    } else {
+      hit++;
+    }
+    gridview(n, res);
+  }
+  console.log("Hit: " + hit);
+  console.log("Miss: " + miss);
+  let hitRatio = hit / (hit + miss);
+  let missRatio = miss / (hit + miss);
+  console.log("Hit Ratio: " + hitRatio);
+  console.log("Miss Ratio: " + missRatio);
+  document.getElementById("hits").innerHTML = "Hit: " + hit;
+  document.getElementById("miss").innerHTML = "Miss: " + miss;
+  document.getElementById("ratioh").innerHTML = "Hit Ratio: " + hitRatio;
+  document.getElementById("ratiom").innerHTML = "Miss Ratio: " + missRatio;
+  
+}
+
+</script>
+
+
+
+</body>
+</html>
